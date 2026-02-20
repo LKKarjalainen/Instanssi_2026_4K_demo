@@ -154,7 +154,7 @@ function basic_color(r,g,b){
 }
 
 function buildSceneAtTime(t){
-
+    
     var sceneroot = {f:[],o:[],c:[]};
 
     var ctausta=
@@ -178,7 +178,7 @@ function buildSceneAtTime(t){
                       c:[],
                       r:[new Camera()]});
     sceneroot.c.push({f:[translate_wi(9*Math.sin(t), 3+Math.sin(t), 0), scale_wi(.1)],
-                      o:[new Material(basic_color(90,90,9)), objTile],
+                      o:[new Material(basic_color(9,9,9)), objTile],
                       c:[],
                       r:[new Light()]});
 
@@ -208,13 +208,23 @@ return sceneroot;
  * text shown as usual HTML or hypertext. Not often used in actual
  * demoscene productions.
  */
-function initDocument(){
+const synth = window.speechSynthesis;
+const voices = synth.getVoices();
+async function initDocument(){
     text = document.createElement("div");
     text.style.position = "fixed";
     text.style.font = "10em Arial";
     document.body.appendChild(text);
+
+    console.log(voices);
+    const finnishVoice = voices.find(v => v.lang === "fi-FI");
+    var utterance = new SpeechSynthesisUtterance("Makarooooni");
+    for (let step = 0; step < 100; step++) {
+    utterance.voice = finnishVoice
+        synth.speak(utterance);
+    }
 }
 
 function updateDocument(t){
-    text.textContent = ":DDDD";
+    text.textContent = "MAKAROONI :DDDD";
 }
